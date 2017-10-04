@@ -1,2 +1,2 @@
 # amazon-smarthome-skill-php-sdk
-PHP SDK for Amazon SmartHome Skills
+PHP SDK for Amazon Alexa SmartHome Skills
