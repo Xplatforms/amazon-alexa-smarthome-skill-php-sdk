@@ -1,5 +1,8 @@
 ## PHP API for Amazon Alexa Smart Home Skill (updated Version 3)
 
+
+#### alexa_smarthomeskill_api - collection of PHP API for Alexa Smart Home Skill
+ 
 - #### alexa_discovery.php - implemets Discovery Interface. Provides PHP classes for
    - parsing discovery request from Amazon(AWS Lambda)
    - and building response with or without Endpoints(Smart Home devices) as described [here](https://developer.amazon.com/docs/device-apis/alexa-discovery.html)
