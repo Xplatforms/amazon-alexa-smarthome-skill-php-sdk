@@ -16,11 +16,19 @@
 - #### alexa_endpoint.php - implements Endpoints Interfaces.
    - Endpoint represents a connected device associated with the customer’s device cloud account. (Smart Device)
 
-
+#### aws_lambda.js : Node.js 6.10
+   - Example code for AWS Lambda function to forward requests and responses from AWS to your server and back
+   - copy or upload this file to your AWS Lambda function.
+   - Don't forget to change REMOTE_CLOUD_HOSTNAME and REMOTE_CLOUD_BASE_PATH to the right paths
+   - ```javascript
+     var https = require('https');
+     var REMOTE_CLOUD_BASE_PATH = "/smarthome_skill/";
+     var REMOTE_CLOUD_HOSTNAME = "yourdomain.com";
+     ```
 
 
 ##### TODO:
-  - [ ] AWS Lambda code for forwarding request and responses 
+  - [x] AWS Lambda code for forwarding request and responses 
   - [ ] Discovery example code - respond to Discover request with example devices
   - [ ] turnON, turnOFF example code for PowerSwitch Interface
 
