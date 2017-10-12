@@ -29,11 +29,15 @@
      var REMOTE_CLOUD_BASE_PATH = "/smarthome_skill/";
      var REMOTE_CLOUD_HOSTNAME = "yourdomain.com";
      ```
+#### discovery.php
+    This is an example of using Amazon Alexa Smart Home Skill PHP API.
+    It simply parses AlexaDiscoveryRequest generates one Endpoint device and sends response back.
+    
 
 
 ##### TODO:
   - [x] AWS Lambda code for forwarding request and responses 
-  - [ ] Discovery example code - respond to Discover request with example devices
+  - [x] Discovery example code - respond to Discover request with example devices
   - [ ] turnON, turnOFF example code for PowerSwitch Interface
 
 
