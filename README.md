@@ -3,20 +3,20 @@
 
 #### alexa_smarthomeskill_api - collection of PHP API for Alexa Smart Home Skill
  
-- #### alexa_discovery.php - implemets Discovery Interface. Provides PHP classes for
+- ###### alexa_discovery.php - implemets Discovery Interface. Provides PHP classes for
    - parsing discovery request from Amazon(AWS Lambda)
    - and building response with or without Endpoints(Smart Home devices) as described [here](https://developer.amazon.com/docs/device-apis/alexa-discovery.html)
 
-- #### alexa_header.php - Alexa Header 
+- ###### alexa_header.php - Alexa Header 
    - parsing and building Alexa headers
 
-- #### alexa_payload.php - Alexa Payloads
+- ###### alexa_payload.php - Alexa Payloads
    - payloads for responses
 
-- #### alexa_response.php - Alexa Response constructor
+- ###### alexa_response.php - Alexa Response constructor
    - constructs response with event, header and given payload
 
-- #### alexa_endpoint.php - implements Endpoints Interfaces.
+- ###### alexa_endpoint.php - implements Endpoints Interfaces.
    - Endpoint represents a connected device associated with the customer’s device cloud account. (Smart Device)
 
 #### aws_lambda.js : Node.js 6.10
