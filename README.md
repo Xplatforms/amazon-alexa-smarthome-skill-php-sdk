@@ -23,7 +23,8 @@
    - Example code for AWS Lambda function to forward requests and responses from AWS to your server and back
    - copy or upload this file to your AWS Lambda function.
    - Don't forget to change REMOTE_CLOUD_HOSTNAME and REMOTE_CLOUD_BASE_PATH to the right paths
-   - ```javascript
+
+     ```javascript
      var https = require('https');
      var REMOTE_CLOUD_BASE_PATH = "/smarthome_skill/";
      var REMOTE_CLOUD_HOSTNAME = "yourdomain.com";
