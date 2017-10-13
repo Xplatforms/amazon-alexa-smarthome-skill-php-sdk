@@ -21,7 +21,7 @@ class AlexaEndpointCookies implements JsonSerializable
 {
     public function add_cookie( $name, $value ) {$this->{$name} = $value;}
     public function jsonSerialize() {return get_object_vars($this);}
-}
+};
 
 class AlexaEndpointProperty implements JsonSerializable  
 {
@@ -43,16 +43,19 @@ class AlexaEndpointProperties implements JsonSerializable
         else array_push($this->supported, new AlexaEndpointProperty($props));
     }
 
-    public function add_property($value)
+    public function add_supported_property($value)
     {
         array_push($this->supported, new AlexaEndpointProperty($value));
     }
 
+    public function add_property($name, $value)
+    {
+        $this->{$name} = $value;
+    }
+
     public function jsonSerialize() 
     {
-        return [
-            'supported' => $this->supported
-        ];
+        return get_object_vars($this);
     }
 
 };
@@ -60,39 +63,21 @@ class AlexaEndpointProperties implements JsonSerializable
 class AlexaCapabilityInterface implements JsonSerializable 
 {
     private $type = "AlexaInterface";
-    public $interface;
-    public $version = "3";
-    public $properties = null;
-    public $proactivelyReported = false;
-    public $retrievable = false;
-
-    public function jsonSerialize() 
-    {
-        return [
-            'type' => $this->type,
-            'interface' => $this->interface,
-            'version' => $this->version,
-            'properties' => $this->properties,
-            'proactivelyReported' => $this->proactivelyReported,
-            'retrievable' => $this->retrievable
-        ];
-    }
-};
-
-class AlexaCapabilityInterfaceAlexa implements JsonSerializable
-{
-    private $type = "AlexaInterface";
-    private $interface = "Alexa";
+    private $interface;
     private $version = "3";
 
     public function jsonSerialize() 
     {
-        return [
-            'type' => $this->type,
-            'interface' => $this->interface,
-            'version' => $this->version
-        ];
+        return get_object_vars($this);
     }
+};
+
+class AlexaCapabilityInterfaceAlexa extends AlexaCapabilityInterface
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa";
+    }    
 };
 
 class AlexaCapabilityInterfacePowerController extends AlexaCapabilityInterface 
@@ -100,23 +85,186 @@ class AlexaCapabilityInterfacePowerController extends AlexaCapabilityInterface
     public function __construct()
     {
         $this->interface = "Alexa.PowerController";
-        $this->proactivelyReported = true;
-        $this->retrievable = true;
-        $this->properties = new AlexaEndpointProperties("powerState");                
+        $this->properties = new AlexaEndpointProperties("powerState");
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);
     }   
-}
+};
 
 class AlexaCapabilityInterfaceEndpointHealth extends AlexaCapabilityInterface 
-{
-  
+{  
     public function __construct()
     {
         $this->interface = "Alexa.EndpointHealth";
-        $this->proactivelyReported = true;
-        $this->retrievable = true;
-        $this->properties = new AlexaEndpointProperties("connectivity");                
+        $this->properties = new AlexaEndpointProperties("connectivity");      
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);          
     }   
+};
+
+class AlexaCapabilityInterfaceColorController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.ColorController";
+        $this->properties = new AlexaEndpointProperties("color");  
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);              
+    }   
+};
+
+class AlexaCapabilityInterfaceBrightnessController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.BrightnessController";
+        $this->properties = new AlexaEndpointProperties("brightness");         
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);       
+    }   
+};
+
+class AlexaCapabilityInterfaceColorTemperatureController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.ColorTemperatureController";
+        $this->properties = new AlexaEndpointProperties("colorTemperatureInKelvin");   
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);             
+    }   
+};
+
+class AlexaCapabilityInterfacePowerLevelController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.PowerLevelController";
+        $this->properties = new AlexaEndpointProperties("powerLevel");  
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);              
+    }   
+};
+
+class AlexaCapabilityInterfacePercentageController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.PercentageController";
+        $this->properties = new AlexaEndpointProperties("percentage");    
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);            
+    }   
+};
+
+class AlexaCapabilityInterfaceThermostatController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.ThermostatController";
+        $props = new AlexaEndpointProperties("targetSetpoint");
+        $props->add_supported_property("thermostatMode");
+        $props->add_supported_property("upperSetpoint");
+        $props->add_supported_property("lowerSetpoint");
+        $props->properties->add_property("proactivelyReported", true);
+        $props->properties->add_property("retrievable", true);
+        $this->properties = $props;
+    }   
+};
+
+class AlexaCapabilityInterfaceTemperatureSensor extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.TemperatureSensor";
+        $this->properties = new AlexaEndpointProperties("temperature");   
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);             
+    }   
+};
+
+class AlexaCapabilityInterfaceLockController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.LockController";
+        $this->properties = new AlexaEndpointProperties("lockState");     
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);           
+    }   
+};
+
+class AlexaCapabilityInterfaceChannelController extends AlexaCapabilityInterface 
+{
+    public function __construct()
+    {
+        $this->interface = "Alexa.ChannelController";
+        $this->properties = new AlexaEndpointProperties("channel"); 
+        $this->properties->add_property("proactivelyReported", true);
+        $this->properties->add_property("retrievable", true);               
+    }   
+};
+
+class AlexaCapabilityInterfaceSceneController implements JsonSerializable
+{
+    private $type = "AlexaInterface";
+    private $interface = "Alexa.SceneController";
+    private $version = "3";
+    public $supportsDeactivation = true;
+    public $proactivelyReported = true;
+
+    public function jsonSerialize() 
+    {
+        return [
+            'type' => $this->type,
+            'interface' => $this->interface,
+            'version' => $this->version,
+            'supportsDeactivation' => $this->supportsDeactivation,
+            'proactivelyReported' => $this->proactivelyReported
+        ];
+    }
+};
+
+class AlexaCapabilityInterfaceCameraStreamController implements JsonSerializable
+{
+    private $type = "AlexaInterface";
+    private $interface = "Alexa.CameraStreamController";
+    private $version = "3";
+    public $cameraStreamConfigurations = null;
+
+    /** To implement
+     *  {
+                                    "protocols": [
+                                        "RTSP"
+                                    ],
+                                    "resolutions": [
+                                        {
+                                            "width": 1280,
+                                            "height": 720
+                                        }
+                                    ],
+                                    "authorizationTypes": [
+                                        "NONE"
+                                    ],
+                                    "videoCodecs": [
+                                        "H264"
+                                    ],
+                                    "audioCodecs": [
+                                        "AAC"
+                                    ]
 }
+     */
+
+    public function jsonSerialize() 
+    {
+        return [
+            'type' => $this->type,
+            'interface' => $this->interface,
+            'version' => $this->version,
+            'cameraStreamConfigurations' => $this->cameraStreamConfigurations
+        ];
+    }
+};
 
 class AlexaEndpoint implements JsonSerializable 
 {

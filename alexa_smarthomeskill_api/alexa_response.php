@@ -26,11 +26,11 @@ class AlexaEvent implements JsonSerializable
 
 class AlexaResponse implements JsonSerializable
 {
-    private $event = null;
+    public $event = null;
 
-    public function __construct($namespace, $name, $payload ) 
+    public function __construct($namespace, $name, $payload, $correlationToken = null) 
     {
-        $this->event = new AlexaEvent(new AlexaHeader($namespace, $name), $payload);      
+        $this->event = new AlexaEvent(new AlexaHeader($namespace, $name, $correlationToken), $payload);      
     }
 
     public function jsonSerialize() 
