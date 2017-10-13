@@ -41,4 +41,14 @@ class AlexaResponse implements JsonSerializable
     }
 };
 
+class AlexaDeferredResponse extends AlexaResponse
+{
+    public function __construct($correlationToken, $estimatedDeferralInSeconds)
+    {
+        $payload = new AlexaResponsePayload("estimatedDeferralInSeconds", intval($estimatedDeferralInSeconds));
+        $header = new AlexaHeader("Alexa", "DeferredResponse", $correlationToken);
+        $this->event = new AlexaEvent($header, $payload);
+    }
+}
+
 ?>
