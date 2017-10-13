@@ -18,6 +18,7 @@ class AlexaHeader implements JsonSerializable
     public $namespace;
     public $payloadVersion = "3";
     public $messageId;
+    public $correlationToken = null;
 
     public function __construct() 
     {
@@ -25,6 +26,14 @@ class AlexaHeader implements JsonSerializable
         {
             call_user_func_array(array($this,$f),func_get_args());
         } 
+    }
+
+    public function __construct3($namespace, $name, $correlationToken)
+    {
+        $this->namespace = $namespace;
+        $this->name = $name;
+        $this->correlationToken = $correlationToken;
+        $this->messageId = guidv4();        
     }
 
     public function __construct2($namespace, $name)
@@ -47,12 +56,17 @@ class AlexaHeader implements JsonSerializable
 
     public function jsonSerialize() 
     {
-        return [
+        $ret = [
             'name' => $this->name,
             'namespace' => $this->namespace,
             'payloadVersion' => $this->payloadVersion,
             'messageId' => $this->messageId
         ];
+        if(isset($this->correlationToken))
+        {
+            $ret['correlationToken'] = $this->correlationToken;
+        }
+        return $ret;
     }   
 };
 
