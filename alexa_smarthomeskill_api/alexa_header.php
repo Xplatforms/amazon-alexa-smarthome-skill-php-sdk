@@ -43,7 +43,7 @@ class AlexaHeader implements JsonSerializable
         $this->messageId = guidv4();        
     }
 
-    public function __construct1( stdClass &$object ) 
+    public function __construct1( stdClass $object ) 
     {
         foreach($object as $property => &$value)
         {

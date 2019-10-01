@@ -36,4 +36,26 @@ class AlexaResponsePayload implements JsonSerializable
     }
 }
 
+class AlexaAcceptGrantErrorResponsePayload implements JsonSerializable  
+{
+    private $type;
+    private $message;
+
+    public function __construct( $type, $message ) 
+    {
+        $this->type = $type;
+        $this->message = $message;
+    }
+
+    public function jsonSerialize() 
+    {
+        return [
+            'type' => $this->type,
+            'message' => $this->message
+        ];
+    }
+}
+
+class AlexaErrorResponsePayload extends AlexaAcceptGrantErrorResponsePayload{}
+
 ?>
