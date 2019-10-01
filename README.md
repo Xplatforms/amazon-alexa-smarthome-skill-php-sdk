@@ -53,6 +53,6 @@
 ##### TODO:
   - [x] AWS Lambda code for forwarding request and responses 
   - [x] Discovery example code - respond to Discover request with example devices
-  - [ ] turnON, turnOFF example code for PowerSwitch Interface
+  - [x] turnON, turnOFF example code for PowerSwitch Interface
 
 
