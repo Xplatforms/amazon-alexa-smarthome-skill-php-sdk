@@ -73,6 +73,37 @@ function getPowerControllerResponseFromCloud(str, callbackfunc)
     request.end();
 }
 
+function getDeviceReportStateFromCloud(str, callbackfunc)
+{
+    var options = {
+            hostname: REMOTE_CLOUD_HOSTNAME,
+            port: 443,
+            path: REMOTE_CLOUD_BASE_PATH+'state.php',
+            method: 'POST',
+            headers: 
+            {
+                'Content-Type': 'application/json',
+                accept: '*/*' // Warning! Accepting all headers in production could lead to security problems.
+    }};
+    
+    var callback = function(response){
+            var str = '';
+            response.on('data', function(chunk) {
+                // TODO: Add string limit here
+                str += chunk.toString('utf-8');
+            });
+    
+            response.on('end', function() {
+                log('DEBUG', 'Response from Cloud: '+ str);
+                callbackfunc(null, JSON.parse(str));
+            });
+    }
+    
+    var request = https.request(options, callback);
+    request.write(str);
+    request.end();
+}
+
 //Get amazon user profile id. 
 function getAmazonApiOptions(token)
 {
@@ -149,6 +180,17 @@ exports.handler = (request, context, callback) => {
         
         case 'Alexa.PowerController':
             getPowerControllerResponseFromCloud(JSON.stringify(request), callback);
+            break;
+            
+        case 'Alexa':
+            if(request.directive.header.name == 'ReportState')
+            {
+                getDeviceReportStateFromCloud(JSON.stringify(request), callback);
+            }
+            else
+            {
+                log('ERROR', 'Unsupported name '+request.directive.header.name);
+            }
             break;
 
         default: {
