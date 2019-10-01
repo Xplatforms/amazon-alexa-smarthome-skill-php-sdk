@@ -48,11 +48,16 @@
     This is an example of using Amazon Alexa Smart Home Skill PHP API.
     It simply parses AlexaDiscoveryRequest generates one Endpoint device and sends response back.
     
+#### control.php
+    This is an example of using Amazon Alexa Smart Home Skill PHP API.
+    It simply parses Alexa.PowerControl request and responds with OK to TurnOn and TurnOff requests.
+    This example could respond with errors: just change $not_found or $user_check_faild to true
+    
 
 
 ##### TODO:
   - [x] AWS Lambda code for forwarding request and responses 
   - [x] Discovery example code - respond to Discover request with example devices
-  - [ ] turnON, turnOFF example code for PowerSwitch Interface
+  - [x] turnON, turnOFF example code for PowerSwitch Interface
 
 
