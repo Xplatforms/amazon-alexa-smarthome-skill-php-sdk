@@ -16,6 +16,9 @@
 - ###### alexa_response.php - Alexa Response constructor
    - constructs response with event, header and given payload
    
+- ###### alexa_report.php - Alexa ChangeReport ans AsyncResponse responses implementation
+   - asynchronous response for AlexaChangeReport(proactively reported states) and asynchronous Alexa Response after deferred reponse. This kind of responses should be sent to Alexa Event Gateway
+   
 - ###### alexa_discovery.php - Alexa Discovery request parser and response constructor
    - AlexaDiscoveryRequest parses discovery request forwarded from aws_lambda.js. And constructs response with event, header and given payload
 
