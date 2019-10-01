@@ -15,9 +15,21 @@
 
 - ###### alexa_response.php - Alexa Response constructor
    - constructs response with event, header and given payload
+   
+- ###### alexa_discovery.php - Alexa Discovery request parser and response constructor
+   - AlexaDiscoveryRequest parses discovery request forwarded from aws_lambda.js. And constructs response with event, header and given payload
 
 - ###### alexa_endpoint.php - implements Endpoints Interfaces.
    - Endpoint represents a connected device associated with the customer’s device cloud account. (Smart Device)
+   
+- ###### alexa_context.php - implements Alexa Context class.
+   - AlexaContext class represents Context object for example for Alexa StateReport response.
+   
+- ###### alexa_control.php - parser class for AlexaControl requests and directive
+   - parses Control request and sets correlation token, directive and scope for future use.   
+   
+- ###### alexa_const_errors.php - Helpers for responsing errors on failed control requests 
+   - AlexaError helper class constructs 'type' -> 'message' chain for given error type in constructor
 
 #### aws_lambda.js : Node.js 6.10
    - Example code for AWS Lambda function to forward requests and responses from AWS to your server and back
