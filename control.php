@@ -3,6 +3,9 @@
 require_once(dirname(dirname(__FILE__)).'/alexa_smarthomeskill_api/alexa_control.php');
 require_once(dirname(dirname(__FILE__)).'/alexa_smarthomeskill_api/alexa_endpoint.php');
 require_once(dirname(dirname(__FILE__)).'/alexa_smarthomeskill_api/alexa_response.php');
+require_once(dirname(dirname(__FILE__)).'/alexa_smarthomeskill_api/alexa_report.php');
+require_once(dirname(dirname(__FILE__)).'/alexa_smarthomeskill_api/alexa_const_errors.php');
+
 
 $req = file_get_contents ( 'php://input' );
 $json_data = json_decode($req);
@@ -58,9 +61,8 @@ else
             }
 
             $context->add_property(new AlexaContextProperty("Alexa.EndpointHealth", "connectivity", new AlexaContextPropertyValue("value", "OK"), 6000));
-            //actually not needed for synchronous response. But should be set in async response
-            $state_endpoint = new AlexaStateEndpoint($alexa_control->scope()->token, $alexa_control->endpoint->endpointId);
-            $state = new AlexaStateResponse($alexa_control->correlationToken(), $context, $state_endpoint);
+            //actually scope is not needed for synchronous response. But should be set in async response
+            $state = new AlexaAsyncResponse($context, $alexa_control->scope()->token, $alexa_control->endpoint->endpointId, $alexa_control->correlationToken() );
 
             echo json_encode($state);
             exit();
