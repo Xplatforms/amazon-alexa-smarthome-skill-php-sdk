@@ -63,7 +63,7 @@ class AlexaEndpointProperties implements JsonSerializable
 class AlexaCapabilityInterface implements JsonSerializable 
 {
     private $type = "AlexaInterface";
-    private $interface;
+    protected $interface;
     private $version = "3";
 
     public function jsonSerialize() 
@@ -266,6 +266,23 @@ class AlexaCapabilityInterfaceCameraStreamController implements JsonSerializable
     }
 };
 
+class AlexaEndpointOnlyID implements JsonSerializable 
+{
+    private $endpointId = "";
+
+    public function __construct( $endpointId ) 
+    {
+        $this->endpointId = $endpointId;
+    }
+
+    public function jsonSerialize() 
+    {
+        return [
+            'endpointId' => $this->endpointId
+        ];
+    }
+}
+
 class AlexaEndpoint implements JsonSerializable 
 {
     // Only following chars & symbols accepted: [a-z][A-Z][0-9] _ - = # ; : ? @ &
@@ -284,7 +301,7 @@ class AlexaEndpoint implements JsonSerializable
     }
 
     public function set_cookie($cookies){$this->cookie = $cookies;}
-    public function add_capability($cap){array_push($this->capabilities, $cap);}
+    public function add_capability($cap){if($cap != null)array_push($this->capabilities, $cap);}
 
     public function add_displayCategories($displayCategories)
     {
@@ -296,6 +313,18 @@ class AlexaEndpoint implements JsonSerializable
             }
         }
         else array_push($this->displayCategories, $displayCategories);
+    }
+
+    public function contains_displayCategory($category)
+    {
+        if(is_array($this->displayCategories))
+        {
+            foreach($this->displayCategories as &$cat)
+            {
+                if(strcmp($cat, $category) == 0)return true;
+            }
+        }
+        return false;
     }
 
     public function jsonSerialize() 
