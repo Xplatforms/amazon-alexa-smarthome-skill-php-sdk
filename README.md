@@ -53,11 +53,15 @@
     It simply parses Alexa.PowerControl request and responds with OK to TurnOn and TurnOff requests.
     This example could respond with errors: just change $not_found or $user_check_faild to true
     
-
+#### state.php
+    This is an example of using Amazon Alexa Smart Home Skill PHP API.
+    It simply parses Alexa.ReportState request and responds back to AWS Lambda function.
+    To change the state of device you could change $device_state_is_on and $device_is_online values
 
 ##### TODO:
   - [x] AWS Lambda code for forwarding request and responses 
   - [x] Discovery example code - respond to Discover request with example devices
   - [x] turnON, turnOFF example code for PowerSwitch Interface
+  - [x] ReportState example code for PowerSwitch Interface
 
 
